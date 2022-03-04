@@ -7,7 +7,7 @@ function Header({ handleSearchOptionModal }) {
       <Container>
         <Navbar.Brand href="/">what's happening?</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link onClick={handleSearchOptionModal}>search here...</Nav.Link>
+          <Nav.Link onClick={handleSearchOptionModal}>Search</Nav.Link>
         </Nav>
       </Container>
     </Navbar>
