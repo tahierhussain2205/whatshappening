@@ -1,22 +1,34 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
-import SearchOptionsModal from "./components/SearchOptionsModal";
+import HomePage from "./pages/Home";
+import EverythingPage from "./pages/Everything";
+import TopHeadlinesPage from "./pages/TopHeadlines";
+import Footer from "./components/Footer";
+import { Container } from "react-bootstrap";
+import { withRouter } from "react-router";
+
+const HeaderWithRouter = withRouter(Header);
 
 function App() {
-  const [openSearchOptionsModal, setSearchOptionsModal] = useState(false);
-
-  const handleSearchOptionModal = () => {
-    setSearchOptionsModal((prev) => !prev);
-  };
   return (
     <>
-      <Header handleSearchOptionModal={handleSearchOptionModal} />
-      <SearchOptionsModal
-        openSearchOptionsModal={openSearchOptionsModal}
-        handleSearchOptionModal={handleSearchOptionModal}
-      />
+      <HeaderWithRouter />
+      <Container style={{ minHeight: "500px" }}>
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/everything" exact>
+            <EverythingPage />
+          </Route>
+          <Route path="/top-headlines" exact>
+            <TopHeadlinesPage />
+          </Route>
+        </Switch>
+      </Container>
+      <Footer />
     </>
   );
 }

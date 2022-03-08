@@ -1,21 +1,35 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
-import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 
-function Header({ handleSearchOptionModal }) {
+function Header() {
+  const history = useHistory();
+
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      style={{ backgroundColor: "#3e573b" }}
+      variant="dark"
+    >
       <Container>
         <Navbar.Brand href="/">what's happening?</Navbar.Brand>
-        <Nav className="me-auto">
-          <Nav.Link onClick={handleSearchOptionModal}>Search</Nav.Link>
-        </Nav>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse
+          className="d-flex justify-content-end"
+          id="responsive-navbar-nav"
+        >
+          <Nav>
+            <Nav.Link onClick={() => history.replace("/everything")}>
+              Everything
+            </Nav.Link>
+            <Nav.Link onClick={() => history.replace("/top-headlines")}>
+              Top Headlines
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
-
-Header.propTypes = {
-  handleSearchOptionModal: PropTypes.bool.isRequired,
-};
 
 export default Header;
