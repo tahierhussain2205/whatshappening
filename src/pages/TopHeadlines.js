@@ -25,40 +25,42 @@ function TopHeadlinesPage() {
 
   const handleApiRequest = (searchOpts) => {
     setIsLoading(true);
-    const apiKey = process.env.REACT_APP_API_KEY;
-    let queryParams = "";
+    let url = "https://newsapi.org/v2/top-headlines?";
 
     const query = searchOpts.exactMatch
       ? '"' + searchOpts.q + '"'
       : searchOpts.q;
 
     if (query && query.length) {
-      queryParams += "q=" + query + "&";
+      url += "q=" + query + "&";
     }
 
     if (searchOpts.sources.length) {
-      queryParams += "sources=" + searchOpts.sources.join(",") + "&";
+      url += "sources=" + searchOpts.sources.join(",") + "&";
     }
 
     if (searchOpts.country.length) {
-      queryParams += "country=" + searchOpts.country + "&";
+      url += "country=" + searchOpts.country + "&";
     }
 
     if (searchOpts.category.length) {
-      queryParams += "category=" + searchOpts.category + "&";
+      url += "category=" + searchOpts.category + "&";
     }
 
-    queryParams += "pageSize=100&";
-    queryParams += "apiKey=" + apiKey;
+    url += "pageSize=100&";
 
     const requestOptions = {
-      method: "GET",
-      url: "https://newsapi.org/v2/top-headlines?" + queryParams,
+      method: "POST",
+      url: "/api/news/get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: { url },
     };
     axios(requestOptions)
       .then((res) => {
         setIsLoading(false);
-        setResults(res.data.articles);
+        setResults(res.data.data.articles);
       })
       .catch((err) => {
         setIsLoading(false);

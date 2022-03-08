@@ -29,19 +29,19 @@ function EverythingPage() {
   }, [searchOptions]);
 
   const handleSearchOptions = (newSearchOpts) => {
+    console.log(newSearchOpts);
     setSearchOptions(newSearchOpts);
   };
 
   const handleApiRequest = (searchOpts) => {
     setIsLoading(true);
-    const apiKey = process.env.REACT_APP_API_KEY;
-    let queryParams = "";
+    let url = "https://newsapi.org/v2/everything?";
     const query = searchOpts.exactMatch
       ? '"' + searchOpts.q + '"'
       : searchOpts.q;
 
     if (query && query.length) {
-      queryParams += "q=" + query + "&";
+      url += "q=" + query + "&";
     }
 
     let searchIn = [];
@@ -51,49 +51,52 @@ function EverythingPage() {
       }
     });
     if (searchIn && searchIn.length) {
-      queryParams += "searchIn=" + searchIn + "&";
+      url += "searchIn=" + searchIn + "&";
     }
 
     if (searchOpts.sources.length) {
-      queryParams += "sources=" + searchOpts.sources.join(",") + "&";
+      url += "sources=" + searchOpts.sources.join(",") + "&";
     }
 
     if (searchOpts.domains.length) {
-      queryParams += "domains=" + searchOpts.domains.join(",") + "&";
+      url += "domains=" + searchOpts.domains.join(",") + "&";
     }
 
     if (searchOpts.excludeDomains.length) {
-      queryParams +=
-        "excludeDomains=" + searchOpts.excludeDomains.join(",") + "&";
+      url += "excludeDomains=" + searchOpts.excludeDomains.join(",") + "&";
     }
 
     if (searchOpts.from.length) {
-      queryParams += "from=" + searchOpts.from + "&";
+      url += "from=" + searchOpts.from + "&";
     }
 
     if (searchOpts.to.length) {
-      queryParams += "to=" + searchOpts.to + "&";
+      url += "to=" + searchOpts.to + "&";
     }
 
     if (searchOpts.language.length) {
-      queryParams += "language=" + searchOpts.language + "&";
+      url += "language=" + searchOpts.language + "&";
     }
 
     if (searchOpts.sortBy.length) {
-      queryParams += "sortBy=" + searchOpts.sortBy + "&";
+      url += "sortBy=" + searchOpts.sortBy + "&";
     }
 
-    queryParams += "pageSize=100&";
-    queryParams += "apiKey=" + apiKey;
+    url += "pageSize=100&";
 
     const requestOptions = {
-      method: "GET",
-      url: "https://newsapi.org/v2/everything?" + queryParams,
+      method: "POST",
+      url: "/api/news/get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: { url },
     };
+
     axios(requestOptions)
       .then((res) => {
         setIsLoading(false);
-        setResults(res.data.articles);
+        setResults(res.data.data.articles);
       })
       .catch((err) => {
         setIsLoading(false);

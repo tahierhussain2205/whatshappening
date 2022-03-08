@@ -20,7 +20,7 @@ function NewsLayout({
     <>
       <Container className="my-3">
         <Container className="p-0">
-          <Button inline size="sm" variant="primary" onClick={handleOpen}>
+          <Button size="sm" variant="primary" onClick={handleOpen}>
             Modify Search Query
           </Button>
         </Container>

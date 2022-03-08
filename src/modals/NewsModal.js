@@ -1,6 +1,5 @@
 import { Col, Modal, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
 function NewsModal({ open, handleOpen, result }) {
   const getDate = (publishedAt) => {
@@ -20,7 +19,12 @@ function NewsModal({ open, handleOpen, result }) {
       )}
       <Modal.Header>
         <Modal.Title>
-          <Link onClick={() => window.open(result.url)}>{result.title}</Link>
+          <strong
+            style={{ cursor: "pointer" }}
+            onClick={() => window.open(result.url)}
+          >
+            <u>{result.title}</u>
+          </strong>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
