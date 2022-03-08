@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 function NewsModal({ open, handleOpen, result }) {
-  const getDate = (date) => {
-    var date = new Date(date);
+  const getDate = (publishedAt) => {
+    var date = new Date(publishedAt);
     return (
       date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
     );
@@ -15,6 +15,7 @@ function NewsModal({ open, handleOpen, result }) {
         <img
           src={result.urlToImage}
           style={{ width: "100%", height: "30rem", objectFit: "cover" }}
+          alt=""
         />
       )}
       <Modal.Header>

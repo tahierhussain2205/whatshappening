@@ -25,24 +25,28 @@ function EverythingPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    handleSearchOptions(searchOptions, true);
-  }, []);
+    handleApiRequest(searchOptions);
+  }, [searchOptions]);
 
-  const handleSearchOptions = (newSearchOptions, initialReq = false) => {
+  const handleSearchOptions = (newSearchOpts) => {
+    setSearchOptions(newSearchOpts);
+  };
+
+  const handleApiRequest = (searchOpts) => {
     setIsLoading(true);
     const apiKey = process.env.REACT_APP_API_KEY;
     let queryParams = "";
-    const query = newSearchOptions.exactMatch
-      ? '"' + newSearchOptions.q + '"'
-      : newSearchOptions.q;
+    const query = searchOpts.exactMatch
+      ? '"' + searchOpts.q + '"'
+      : searchOpts.q;
 
     if (query && query.length) {
       queryParams += "q=" + query + "&";
     }
 
     let searchIn = [];
-    Object.keys(newSearchOptions.searchIn).map((key) => {
-      if (newSearchOptions.searchIn[key]) {
+    Object.keys(searchOpts.searchIn).forEach((key) => {
+      if (searchOpts.searchIn[key]) {
         searchIn.push(key);
       }
     });
@@ -50,33 +54,33 @@ function EverythingPage() {
       queryParams += "searchIn=" + searchIn + "&";
     }
 
-    if (newSearchOptions.sources.length) {
-      queryParams += "sources=" + newSearchOptions.sources.join(",") + "&";
+    if (searchOpts.sources.length) {
+      queryParams += "sources=" + searchOpts.sources.join(",") + "&";
     }
 
-    if (newSearchOptions.domains.length) {
-      queryParams += "domains=" + newSearchOptions.domains.join(",") + "&";
+    if (searchOpts.domains.length) {
+      queryParams += "domains=" + searchOpts.domains.join(",") + "&";
     }
 
-    if (newSearchOptions.excludeDomains.length) {
+    if (searchOpts.excludeDomains.length) {
       queryParams +=
-        "excludeDomains=" + newSearchOptions.excludeDomains.join(",") + "&";
+        "excludeDomains=" + searchOpts.excludeDomains.join(",") + "&";
     }
 
-    if (newSearchOptions.from.length) {
-      queryParams += "from=" + newSearchOptions.from + "&";
+    if (searchOpts.from.length) {
+      queryParams += "from=" + searchOpts.from + "&";
     }
 
-    if (newSearchOptions.to.length) {
-      queryParams += "to=" + newSearchOptions.to + "&";
+    if (searchOpts.to.length) {
+      queryParams += "to=" + searchOpts.to + "&";
     }
 
-    if (newSearchOptions.language.length) {
-      queryParams += "language=" + newSearchOptions.language + "&";
+    if (searchOpts.language.length) {
+      queryParams += "language=" + searchOpts.language + "&";
     }
 
-    if (newSearchOptions.sortBy.length) {
-      queryParams += "sortBy=" + newSearchOptions.sortBy + "&";
+    if (searchOpts.sortBy.length) {
+      queryParams += "sortBy=" + searchOpts.sortBy + "&";
     }
 
     queryParams += "pageSize=100&";
@@ -88,9 +92,6 @@ function EverythingPage() {
     };
     axios(requestOptions)
       .then((res) => {
-        if (!initialReq) {
-          setSearchOptions(newSearchOptions);
-        }
         setIsLoading(false);
         setResults(res.data.articles);
       })

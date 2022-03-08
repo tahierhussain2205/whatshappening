@@ -170,7 +170,7 @@ function EverythingForm({ searchOptions, handleSearchOptions, handleOpen }) {
             name="group1"
             type="radio"
             id="inline-radio-1"
-            checked={sortBy == "relevancy"}
+            checked={sortBy === "relevancy"}
             onChange={() => setSortBy("relevancy")}
           />
           <Form.Check
@@ -180,7 +180,7 @@ function EverythingForm({ searchOptions, handleSearchOptions, handleOpen }) {
             name="group1"
             type="radio"
             id="inline-radio-2"
-            checked={sortBy == "popularity"}
+            checked={sortBy === "popularity"}
             onChange={() => setSortBy("popularity")}
           />
           <Form.Check
@@ -189,7 +189,7 @@ function EverythingForm({ searchOptions, handleSearchOptions, handleOpen }) {
             label="Published At"
             type="radio"
             id="inline-radio-3"
-            checked={sortBy == "publishedAt"}
+            checked={sortBy === "publishedAt"}
             onChange={() => setSortBy("publishedAt")}
           />
         </Form.Group>

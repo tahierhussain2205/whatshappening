@@ -14,7 +14,7 @@ function SearchOptionsModal({
   return (
     <Modal size="lg" show={open} onHide={handleOpen}>
       <Modal.Body className="p-4">
-        {searchType == "everything" ? (
+        {searchType === "everything" ? (
           <EverythingForm
             searchOptions={searchOptions}
             handleSearchOptions={handleSearchOptions}

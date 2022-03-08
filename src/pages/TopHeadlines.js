@@ -16,32 +16,36 @@ function TopHeadlinesPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    handleSearchOptions(searchOptions, true);
-  }, []);
+    handleApiRequest(searchOptions);
+  }, [searchOptions]);
 
-  const handleSearchOptions = (newSearchOptions, initialReq = false) => {
+  const handleSearchOptions = (newSearchOpts) => {
+    setSearchOptions(newSearchOpts);
+  };
+
+  const handleApiRequest = (searchOpts) => {
     setIsLoading(true);
     const apiKey = process.env.REACT_APP_API_KEY;
     let queryParams = "";
 
-    const query = newSearchOptions.exactMatch
-      ? '"' + newSearchOptions.q + '"'
-      : newSearchOptions.q;
+    const query = searchOpts.exactMatch
+      ? '"' + searchOpts.q + '"'
+      : searchOpts.q;
 
     if (query && query.length) {
       queryParams += "q=" + query + "&";
     }
 
-    if (newSearchOptions.sources.length) {
-      queryParams += "sources=" + newSearchOptions.sources.join(",") + "&";
+    if (searchOpts.sources.length) {
+      queryParams += "sources=" + searchOpts.sources.join(",") + "&";
     }
 
-    if (newSearchOptions.country.length) {
-      queryParams += "country=" + newSearchOptions.country + "&";
+    if (searchOpts.country.length) {
+      queryParams += "country=" + searchOpts.country + "&";
     }
 
-    if (newSearchOptions.category.length) {
-      queryParams += "category=" + newSearchOptions.category + "&";
+    if (searchOpts.category.length) {
+      queryParams += "category=" + searchOpts.category + "&";
     }
 
     queryParams += "pageSize=100&";
@@ -53,9 +57,6 @@ function TopHeadlinesPage() {
     };
     axios(requestOptions)
       .then((res) => {
-        if (!initialReq) {
-          setSearchOptions(newSearchOptions);
-        }
         setIsLoading(false);
         setResults(res.data.articles);
       })
