@@ -8,7 +8,6 @@ function HomePage() {
     <Container className="py-5 text-center">
       <Card className="p-5" style={{ height: "25rem" }}>
         <h1>Hi there!</h1>
-        <h1>{process.env.REACT_APP_API_KEY}</h1>
         <h5>Thanks for taking time to look into my project.</h5>
         <h5>
           Over here, there are two endpoints from which you can search for
