@@ -29,7 +29,6 @@ function EverythingPage() {
   }, [searchOptions]);
 
   const handleSearchOptions = (newSearchOpts) => {
-    console.log(newSearchOpts);
     setSearchOptions(newSearchOpts);
   };
 
@@ -86,7 +85,7 @@ function EverythingPage() {
 
     const requestOptions = {
       method: "POST",
-      url: "/api/news/get",
+      url: process.env.REACT_APP_BACKEND_API + "/api/news/get",
       headers: {
         "Content-Type": "application/json",
       },
