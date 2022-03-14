@@ -151,6 +151,7 @@ function EverythingForm({ searchOptions, handleSearchOptions, handleOpen }) {
             defaultValue={language}
             onChange={(event) => setLanguage(event.target.value)}
           >
+            <option value="">None</option>
             {languages.map((language) => {
               return (
                 <option key={language.code} value={language.code}>

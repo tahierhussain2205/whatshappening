@@ -66,7 +66,7 @@ function TopHeadlinesForm({ searchOptions, handleSearchOptions, handleOpen }) {
             defaultValue={country}
             onChange={(event) => setCountry(event.target.value)}
           >
-            <option>Select Country</option>
+            <option value="">None</option>
             {countries.map((country) => {
               return (
                 <option key={country.code} value={country.code.toLowerCase()}>
@@ -85,7 +85,7 @@ function TopHeadlinesForm({ searchOptions, handleSearchOptions, handleOpen }) {
             defaultValue={category}
             onChange={(event) => setCategory(event.target.value)}
           >
-            <option>Select Category</option>
+            <option value="">None</option>
             {categories.map((category, index) => {
               return (
                 <option key={index} value={category.toLowerCase()}>

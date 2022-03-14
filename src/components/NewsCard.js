@@ -24,18 +24,15 @@ function NewsCard({ result }) {
             src={result.urlToImage || AltImg}
             alt="article image"
             position="top"
-            className="h-50"
-            style={{ objectFit: "cover" }}
+            style={{ height: "180px", objectFit: "cover" }}
           />
-          <MDBCardBody>
-            <small>
-              {result.title.length > 100
-                ? result.title.slice(0, 100) + "..."
-                : result.title}
-            </small>
+          <MDBCardBody style={{ height: "80px" }}>
+            <small className="text-truncate-container">{result.title}</small>
           </MDBCardBody>
           <MDBCardFooter>
-            <small className="text-muted">{result.source.name}</small>
+            <small className="text-muted d-inline-block text-truncate w-100">
+              {result.source.name}
+            </small>
           </MDBCardFooter>
         </MDBCard>
       </MDBCol>
